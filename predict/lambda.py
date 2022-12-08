@@ -36,11 +36,16 @@ def lambda_handler(event: dict, _) -> dict:
         raise RuntimeError("Model object is not the right type")
 
     # Run prediction
-    result = model.predict(df[model.input_columns]).tolist()
+    prediction_result = model.predict(df[model.input_columns])
+
+    # if only one series is returned, convert it to a dataframe with name as result
+    if isinstance(prediction_result, pd.Series):
+        prediction_result = prediction_result.to_frame("result")
+
+    total_result = pd.concat([df.drop(columns=model.input_columns), prediction_result], axis=1)
 
     # Attach unused columns to result. Most likely those are used as id.
-    result_body: PredictionResponseBody = pd.concat([df.drop(columns=model.input_columns), pd.DataFrame({"result": result})],
-                                                    axis=1, ).to_dict(orient="list")
+    result_body: PredictionResponseBody = total_result.to_dict(orient="list")
 
     return {
         "statusCode": 200,
