@@ -38,8 +38,13 @@ def lambda_handler(event: dict, _) -> dict:
     # Run prediction
     prediction_result = model.predict(df[model.input_columns])
 
-    # if only one series is returned, convert it to a dataframe with name as result
-    if isinstance(prediction_result, pd.Series):
+    # if only one column is returned, convert it to a dataframe with name as result
+    if not isinstance(prediction_result, pd.DataFrame):
+        try:
+            # Convert to list
+            prediction_result = pd.Series(prediction_result)
+        except Exception as e:
+            raise RuntimeError(f"Prediction result cannot be convert to series: {e}")
         prediction_result = prediction_result.to_frame("result")
 
     total_result = pd.concat([df.drop(columns=model.input_columns), prediction_result], axis=1)

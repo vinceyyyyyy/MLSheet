@@ -19,8 +19,8 @@ A template for empowering business users with machine learning models.
    `/predict/Dockerfile` (line 43)
 5. Run `sam build` at root to build the project
 6. Run `sam deploy --guided` at root to deploy the project. You will be asked to provide a stack name, AWS region. You
-   can use the default values for other options. The deploy process will generate a `samconfig.toml` file at root.
-   Commit that and push to your repo.
+   can use the default values for other options. When asked for `Save arguments to configuration file`, answer yes to
+   generate a `samconfig.toml` file at root. Commit that toml file and push to your repo.
 7. Get the API endpoint from the output of the deployment. It will be something like
    `https://<random_string>.execute-api.<region>.amazonaws.com/Prod/`
 8. Copy the API endpoint and paste it in `/deliverables/delivery.xlsm` at sheet `Config` cell `C2`
