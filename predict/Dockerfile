@@ -1,7 +1,7 @@
 # Define function directory
 ARG FUNCTION_DIR="/function"
 
-ARG BASE_IMAGE="python:3.11.0-slim"
+ARG BASE_IMAGE="python:3.10-slim"
 FROM ${BASE_IMAGE}  as build-image
 
 # Include global arg in this stage of the build
@@ -39,8 +39,8 @@ ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
 # Install runtime system dependencies
-RUN apt-get update && apt-get install -y \
-    libgomp1
+#RUN apt-get update && apt-get install -y \
+#    libgomp1
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR

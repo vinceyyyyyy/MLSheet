@@ -1,4 +1,5 @@
 from typing import TypedDict, Protocol, runtime_checkable
+from functools import partial
 
 import pandas as pd
 
@@ -12,7 +13,7 @@ class Model(Protocol):
     """
     input_columns: list[str]
 
-    def predict(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
+    def run_predict(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
         ...
 
 
@@ -24,3 +25,7 @@ class PredictionRequestBody(TypedDict):
 
 class PredictionResponseBody(TypedDict):
     result: list[int | float]
+
+def add_method(obj, func):
+        """Bind a function and store it in an object"""
+        setattr(obj, func.__name__, partial(func, obj))

@@ -1,7 +1,7 @@
 import json
 import os
-import pickle
 
+import dill
 import pandas as pd
 
 from utils import PredictionRequestBody, PredictionResponseBody, Model
@@ -23,10 +23,10 @@ def lambda_handler(event: dict, _) -> dict:
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model not found at {model_path}")
 
-     # Load the model
+    # Load the model
     with open(model_path, "rb") as f:
         try:
-            model: Model = pickle.load(f)
+            model = dill.load(f)
             print("Model loaded")
         except Exception as e:
             raise RuntimeError(f"Loading model failed: {e}")
@@ -36,7 +36,7 @@ def lambda_handler(event: dict, _) -> dict:
         raise RuntimeError("Model object is not the right type")
 
     # Run prediction
-    prediction_result = model.predict(df[model.input_columns])
+    prediction_result = model.run_predict(df[model.input_columns])
 
     # if only one column is returned, convert it to a dataframe with name as result
     if not isinstance(prediction_result, pd.DataFrame):
