@@ -1,8 +1,10 @@
 # Models on Cloud
 A template for empowering business users with machine learning models by connecting your spreadsheet to ML models.
 
+## Table of Content
 <!-- TOC -->
 * [Models on Cloud](#models-on-cloud)
+  * [Table of Content](#table-of-content)
   * [How to Use This Template](#how-to-use-this-template)
     * [Setup](#setup)
       * [Windows](#windows)
