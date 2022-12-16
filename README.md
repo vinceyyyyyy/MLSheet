@@ -1,23 +1,31 @@
 # Models on Cloud
-A template for empowering business users with machine learning models by connecting your spreadsheet to ML models.
+A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes. Some of the features included are:
+- **End-User Friendly**: no extra learning or setup needed for end users to use it, runs in their most familiar apps
+- **Cross Platform Support**: supercharged spreadsheets works on both Windows and macOS
+- **Pre-Built CD Pipeline**: update your model in production with one single push
+- **Opinionated Project Structure**: a clear project structure for easy collaboration
+
 
 ## Table of Content
 <!-- TOC -->
 * [Models on Cloud](#models-on-cloud)
   * [Table of Content](#table-of-content)
-  * [How to Use This Template](#how-to-use-this-template)
-    * [Setup](#setup)
+  * [Getting Started](#getting-started)
+    * [Environment Setup](#environment-setup)
       * [Windows](#windows)
       * [macOS/Linux](#macoslinux)
     * [Configure AWS Account](#configure-aws-account)
     * [First Time Deploy](#first-time-deploy)
-    * [Use the Delivery File](#use-the-delivery-file)
-    * [To Update Model After Deployment, Automated with GitHub Actions](#to-update-model-after-deployment-automated-with-github-actions)
+    * [Use the Delivery Files](#use-the-delivery-files)
+      * [Excel](#excel)
+      * [Google Sheets](#google-sheets)
+  * [Update Model After Deployment](#update-model-after-deployment)
   * [Architecture](#architecture)
 <!-- TOC -->
 
-## How to Use This Template
-### Setup
+
+## Getting Started
+### Environment Setup
 #### Windows
 1. Clone this repo, run PowerShell as Administrator and open its location
 2. Run `iex setup\windows.ps1` in PowerShell. This is going to
@@ -52,17 +60,28 @@ A template for empowering business users with machine learning models by connect
    generate a `samconfig.toml` file at root. Commit that toml file and push to your repo
 7. Get the API endpoint from the output printed in terminal. It will be something like
    `https://<random_string>.execute-api.<region>.amazonaws.com/Prod/`
-8. Copy the API endpoint and paste it in `deliverables/delivery.xlsm` at sheet `Config` cell `C2`
 
-### Use the Delivery File
-1. Open `deliverables/delivery.xlsm` in Excel, make sure sheet `Config` cell `C2` is filled with correct API endpoint.
-2. Put your input data in `INPUT_TABLE` table at sheet `Input`. Column names need to be exactly the same as what the
+### Use the Delivery Files
+#### Excel
+1. Open `deliverables/delivery.xlsm` in Excel.
+2. Paste the API endpoint you got from deployment into sheet `Config` cell `C2`.
+3. Put your input data in `INPUT_TABLE` table at sheet `Input`. Column names need to be exactly the same as what the
    model takes.
-3. Find `Queries & Connections` button at `Data` tab and click it. This will open the side panel.
-4. Right click `Query Prediction API` and click `Load To...`. Usually you want to create a table for the output.
+4. Find `Queries & Connections` button at `Data` tab and click it. This will open the side panel.
+5. Right click `Query Prediction API` and click `Load To...` to load the result. Usually you want to create a table for the output.
+#### Google Sheets
+1. Find the template
+   at [Google Sheets](https://docs.google.com/spreadsheets/d/1NeRJ3--OYfLClzsXZcnImhsCsjQY_dFPv1DQiAgTo-s/edit?usp=sharing)
+   and make a copy of it.
+2. Paste the API endpoint you got from deployment into sheet `Config` cell `C2`.
+3. Put your input data in `Input` sheet starting from `A1`, including column names as the first row. Column names need
+   to be exactly the same as what the model takes.
+4. Click the blue `UPDATE` button at either `Input` or `Output` sheet.
+5. The result will be loaded to `Output` sheet, starting from `A1`.
 
-### To Update Model After Deployment, Automated with GitHub Actions
-1. Create a repo on GitHub, go to repo - Settings - Secrets - Actions, use `New repository secret` button to add your
+
+## Update Model After Deployment
+1. Create a repo or folk this repo on GitHub, go to repo - Settings - Secrets - Actions, use `New repository secret` button to add your
    AWS access id and key as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. ![Secrets Setting](docs/secrets.jpg)
 2. Change the branch name at line 4 of `./github/workflows/sam-pipeline.yaml` to your production branch name. Usually
    this is `master` or `main`, and sometimes people use `develop` as production branch as well.
@@ -70,6 +89,7 @@ A template for empowering business users with machine learning models by connect
    file in `predict` with the new one.
 4. Make sure `samconfig.toml` file from the initial deployment exists at project root, commit and push everything to the
    production branch on GitHub, it will be deployed to AWS automatically.
+
 
 ## Architecture
 ![Architecture](docs/architecture.drawio.svg)
