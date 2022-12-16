@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - main # change this to your production branch, could be main/master/develop
 
 jobs:
   deploy:

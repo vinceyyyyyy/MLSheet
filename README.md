@@ -64,10 +64,12 @@ A template for empowering business users with machine learning models by connect
 ### To Update Model After Deployment, Automated with GitHub Actions
 1. Create a repo on GitHub, go to repo - Settings - Secrets - Actions, use `New repository secret` button to add your
    AWS access id and key as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`. ![Secrets Setting](docs/secrets.jpg)
-2. Update `model/train.ipynb` to train the new model.
-3. Use the last cell to dump the new model file.
-4. Replace `predict/model.pkl` with the new model file.
-5. Commit and push the changes to the repo, it will be deployed to AWS automatically.
+2. Change the branch name at line 4 of `./github/workflows/sam-pipeline.yaml` to your production branch name. Usually
+   this is `master` or `main`, and sometimes people use `develop` as production branch as well.
+3. Use `model/train.ipynb` to train the new model, use the last cell to dump the new model file, replace the old model
+   file in `predict` with the new one.
+4. Make sure `samconfig.toml` file from the initial deployment exists at project root, commit and push everything to the
+   production branch on GitHub, it will be deployed to AWS automatically.
 
 ## Architecture
 ![Architecture](docs/architecture.drawio.svg)
