@@ -4,7 +4,7 @@ import os
 import dill
 import pandas as pd
 
-from utils import PredictionRequestBody, PredictionResponseBody, Model
+from interfaces import PredictionRequestBody, PredictionResponseBody, Model
 
 
 def lambda_handler(event: dict, _) -> dict:

@@ -49,8 +49,8 @@ A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in min
 
 ### First Time Deploy
 1. Clone this repo
-2. Develop your model in `model/train.ipynb` and use the last cell to save it to `model/model.pkl`. The model object
-   needs to implement `run_predict` method and `input_columns` attribute, as specified in `predict/utils.py/Model` class.
+2. Develop your model in `model/train.ipynb` and use the last cell to save it as `model.pkl`. The model object
+   needs to implement `run_predict` method and `input_columns` attribute, as specified in `predict/interfaces.py/Model` class.
 3. Move your model file to `predict/model.pkl`
 4. Add your python dependencies to `predict/requirements.txt`. If you have any system dependencies, add them to
    `predict/Dockerfile` (line 43)

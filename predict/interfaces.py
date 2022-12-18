@@ -1,5 +1,4 @@
-from typing import TypedDict, Protocol, runtime_checkable
-
+from typing import Protocol, runtime_checkable
 
 import pandas as pd
 
@@ -17,12 +16,12 @@ class Model(Protocol):
         ...
 
 
-class PredictionRequestBody(TypedDict):
+class PredictionRequestBody(Protocol):
     # value as {column_name: [value1, value2, ...]}
     ColumnNames: list[str]
     Values: dict[str, list[int | float]]
 
 
-class PredictionResponseBody(TypedDict):
+class PredictionResponseBody(Protocol):
     result: list[int | float]
 
