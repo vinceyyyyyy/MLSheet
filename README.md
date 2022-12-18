@@ -63,7 +63,7 @@ A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in min
 
 ### Use the Delivery Files
 #### Excel
-1. Open `deliverables/delivery.xlsm` in Excel.
+1. Open `deliverables/excel.xlsm` in Excel.
 2. Paste the API endpoint you got from deployment into sheet `Config` cell `C2`.
 3. Put your input data in `INPUT_TABLE` table at sheet `Input`. Column names need to be exactly the same as what the
    model takes.
