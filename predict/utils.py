@@ -1,5 +1,5 @@
 from typing import TypedDict, Protocol, runtime_checkable
-from functools import partial
+
 
 import pandas as pd
 
@@ -26,6 +26,3 @@ class PredictionRequestBody(TypedDict):
 class PredictionResponseBody(TypedDict):
     result: list[int | float]
 
-def add_method(obj, func):
-        """Bind a function and store it in an object"""
-        setattr(obj, func.__name__, partial(func, obj))
