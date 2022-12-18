@@ -8,7 +8,7 @@ class Model(Protocol):
     """Interface of Model object that will be used in AWS lambda function.
 
     :attr input_columns: list of column names that are used as input for the model.
-    :method predict: function that takes a dataframe and returns a series of predictions.
+    :method cloud_function: function that takes a dataframe and returns a series of predictions.
     """
     input_columns: list[str]
 

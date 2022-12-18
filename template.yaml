@@ -22,8 +22,8 @@ Resources:
             Method: POST
     Metadata:
       Dockerfile: Dockerfile
-      DockerContext: ./predict
-      DockerTag: predict
+      DockerContext: ./cloud_function
+      DockerTag: cloud_function
 
 
 Outputs:

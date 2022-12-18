@@ -50,10 +50,10 @@ A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in min
 ### First Time Deploy
 1. Clone this repo
 2. Develop your model in `model/train.ipynb` and use the last cell to save it as `model.pkl`. The model object
-   needs to implement `run_predict` method and `input_columns` attribute, as specified in `predict/interfaces.py/Model` class.
-3. Move your model file to `predict/model.pkl`
-4. Add your python dependencies to `predict/requirements.txt`. If you have any system dependencies, add them to
-   `predict/Dockerfile` (line 43)
+   needs to implement `run_predict` method and `input_columns` attribute, as specified by `cloud_function/interfaces.py/Model` class.
+3. Move your model file to `cloud_function/model.pkl`
+4. Add your python dependencies to `cloud_function/requirements.txt`. If you have any system dependencies, add them to
+   `cloud_function/Dockerfile` (line 43)
 5. Run `sam build` in terminal at project root to build the project. You can then locally test it with `sam local start-api`
 6. Run `sam deploy --guided` in terminal at project root to deploy the project to AWS. You will be asked to provide a stack name, AWS region. You
    can use the default values for other options. When asked for `Save arguments to configuration file`, answer yes to
