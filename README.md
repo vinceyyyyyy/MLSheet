@@ -1,27 +1,10 @@
 # Models on Cloud
 A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes. Some of the features included are:
-- **End-User Friendly**: no extra learning or setup needed for end users to use it, runs in their most familiar apps
-- **Cross Platform Support**: supercharged spreadsheets works on both Windows and macOS
-- **Pre-Built CD Pipeline**: update your model in production with one single push
-- **Opinionated Project Structure**: a clear project structure for easy collaboration
-
-
-## Table of Content
-<!-- TOC -->
-* [Models on Cloud](#models-on-cloud)
-  * [Table of Content](#table-of-content)
-  * [Getting Started](#getting-started)
-    * [Environment Setup](#environment-setup)
-      * [Windows](#windows)
-      * [macOS/Linux](#macoslinux)
-    * [Configure AWS Account](#configure-aws-account)
-    * [First Time Deploy](#first-time-deploy)
-    * [Use the Delivery Files](#use-the-delivery-files)
-      * [Excel](#excel)
-      * [Google Sheets](#google-sheets)
-  * [Update Model After Deployment](#update-model-after-deployment)
-  * [Architecture](#architecture)
-<!-- TOC -->
+- **End-User Friendly** - no extra learning or setup needed for end users to use it, runs in their most familiar apps
+- **Cross Platform Support** - supercharged spreadsheets works on both Windows and macOS
+- **Pre-Built CD Pipeline** - update your model in production with one single push
+- **Opinionated Project Structure** - a clear project structure for easy collaboration
+- **Cost Efficient** - use it with no cost or minimum cost (more on this see [cost estimation section](#cost-estimation))
 
 
 ## Getting Started
@@ -89,6 +72,27 @@ A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in min
    file in `predict` with the new one.
 4. Make sure `samconfig.toml` file from the initial deployment exists at project root, commit and push everything to the
    production branch on GitHub, it will be deployed to AWS automatically.
+
+
+## Cost Estimation
+Although it is possible to use this project with no cost, there are three places where AWS billing might be involved. To
+begin with, every new AWS account comes 12 month of free tier benefit, which allows you to use AWS services without any
+cost for certain amount of usage.
+
+| AWS Service                      | Used For                                         | Free Tier Limit                             | Cost beyond Free Tier                                              |
+|----------------------------------|--------------------------------------------------|---------------------------------------------|--------------------------------------------------------------------|
+| Lambda Function                  | Provide runtime to run the container             | 1,000,000 requests per month                | [Lambda Pricing](https://aws.amazon.com/lambda/pricing/)           |
+| Elastic Container Registry (ECR) | Store the Docker Image                           | 500 MB-month of Storage as private registry | [ECR Pricing](https://aws.amazon.com/ecr/pricing/)                 |
+| API Gateway                      | Provide API Endpoint to access from the internet | 1,000,000 API calls received per month      | [API Gateway Pricing](https://aws.amazon.com/api-gateway/pricing/) |
+
+If cost ever occurs, it mostly likely comes from ECR. Although this project has already adopted
+serval methods to reduce image size, such as using
+a [custom Lambda container image](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-create-from-alt)
+and multi-stage build, but if you need to include a bunch of large dependencies, the 500MB of storage provided by the
+free tier is not enough in some cases. 
+
+Luckily, ECR cost beyond free tier is pretty reasonable. Storage is $0.10 per GB / month for data stored in private or
+public repositories, meaning even if you have a giant 1GB image, the cost is only $0.1 per month.
 
 
 ## Architecture
