@@ -1,10 +1,10 @@
 # Models on Cloud
-A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes. Some of the features included are:
-- **End-User Friendly** - no extra learning or setup needed for end users to use it, runs in their most familiar apps
-- **Cross Platform Support** - supercharged spreadsheets works on both Windows and macOS
-- **Pre-Built CD Pipeline** - update your model in production with one single push
-- **Opinionated Project Structure** - a clear project structure for easy collaboration
-- **Cost Efficient** - use it with no cost or minimum cost (more on this see [cost estimation section](#cost-estimation))
+A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes. Some of the features included are:
+- **End-User Friendly** - no extra learning or setup needed for end users to use it. The deliverables run in their most familiar apps.
+- **Cross Platform Support** - supercharged spreadsheets works on both Windows and macOS.
+- **Pre-Built CD Pipeline** - update your model in production with one single push.
+- **Opinionated Project Structure** - a clear project structure for easy collaboration.
+- **Cost Efficient** - use it with no cost or minimum cost (more on this see [cost estimation section](#cost-estimation)).
 
 
 ## Getting Started
@@ -14,41 +14,47 @@ A scaffold for making ML model enabled spreadsheets (Excel/Google Sheets) in min
 2. Run `iex setup\windows.ps1` in PowerShell. This is going to
    install [chocolatey](https://chocolatey.org/), [AWS CLI](https://aws.amazon.com/cli/), [AWS SAM](https://aws.amazon.com/serverless/sam/),
    and [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+3. Reboot your computer when finished
 #### macOS/Linux
 1. Install AWS CLI from [here](https://aws.amazon.com/cli/)
 2. Install AWS SAM
    from [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
 3. Install Docker from [here](https://www.docker.com/get-started)
+4. Reboot your computer when finished
 
 ### Configure AWS Account
-1. Reboot your computer after the Setup finished
-2. Have a AWS account ready, create
-   an [IAM user account](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) with Access Key
-3. Run `aws configure` in your terminal of choice (could be PowerShell on Windows), and when prompted, input:
+1. Have a AWS account ready
+   and [get the Access Key](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys).
+   The best practice is to create
+   an [IAM user account](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) for it
+2. Run `aws configure` in your terminal of choice (could be PowerShell on Windows), and when prompted, input:
    - `AWS Access Key ID`: the AWS Access Key ID for the IAM user you created
    - `AWS Secret Access Key`: the AWS Access Key Secret for the IAM user you created
    - `Default region name`: `us-east-1`
    - `Default output format`: `json`
 
 ### First Time Deploy
-1. Clone this repo
-2. Develop your model in `model/train.ipynb` and use the last cell to save it as `model.pkl`. The model object
-   needs to implement `run_predict` method and `input_columns` attribute, as specified by `cloud_function/interfaces.py/Model` class.
-3. Move your model file to `cloud_function/model.pkl`
-4. Add your python dependencies to `cloud_function/requirements.txt`. If you have any system dependencies, add them to
-   `cloud_function/Dockerfile` (line 43)
-5. Run `sam build` in terminal at project root to build the project. You can then locally test it with `sam local start-api`
-6. Run `sam deploy --guided` in terminal at project root to deploy the project to AWS. You will be asked to provide a stack name, AWS region. You
-   can use the default values for other options. When asked for `Save arguments to configuration file`, answer yes to
-   generate a `samconfig.toml` file at root. Commit that toml file and push to your repo
-7. Get the API endpoint from the output printed in terminal. It will be something like
+1. Develop your model in `model/train.ipynb` and use the last cell to save the model object as `model.pkl`. The model
+   object needs to implement `run_predict` method and `input_columns` attribute, as specified
+   by `cloud_function/interfaces.py/Model` class
+2. Move your model file to `cloud_function` folder
+3. Add your python dependencies to `cloud_function/requirements.txt`. If you have any system dependencies, add them to
+   `cloud_function/Dockerfile` (line 43). For example, if you want to use LightGBM, you need to add `libgomp` here
+4. Start Docker Desktop if haven't, and run `sam build` in terminal at project root to build the project. You can then
+   locally test it with `sam local start-api` command
+5. Run `sam deploy --guided` in terminal at project root to deploy the project to AWS. You will be asked to provide a
+   stack name (set to whatever you want) and AWS region (by default use `us-east-1`). You can use the default values for
+   other options. When asked
+   for `Save arguments to configuration file`, answer yes to generate a `samconfig.toml` file at root. Commit that toml
+   file and push to your repo
+6. Get the API endpoint from the output printed in terminal. It will be something like
    `https://<random_string>.execute-api.<region>.amazonaws.com/Prod/`
 
 ### Use the Delivery Files
 #### Excel
 1. Open `deliverables/excel.xlsm` in Excel.
 2. Paste the API endpoint you got from deployment into sheet `Config` cell `C2`.
-3. Put your input data in `INPUT_TABLE` table at sheet `Input`. Column names need to be exactly the same as what the
+3. Put your input data in `INPUT_TABLE` table in sheet `Input`. Column names need to be exactly the same as what the
    model takes.
 4. Find `Queries & Connections` button at `Data` tab and click it. This will open the side panel.
 5. Right click `Query Prediction API` and click `Load To...` to load the result. Usually you want to create a table for the output.
