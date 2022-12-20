@@ -23,7 +23,7 @@ ARG FUNCTION_DIR
 RUN mkdir -p ${FUNCTION_DIR}
 
 # Copy function code
-COPY lambda.py utils.py model.pkl ${FUNCTION_DIR}/
+COPY lambda.py interfaces.py model.pkl ${FUNCTION_DIR}/
 
 # Install the function's dependencies using file requirements.txt
 # from your project folder.

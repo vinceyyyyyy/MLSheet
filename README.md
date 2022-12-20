@@ -1,6 +1,8 @@
 # Models on Cloud
-A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes. Some of the features included are:
-- **End-User Friendly** - no extra learning or setup needed for end users to use it. The deliverables run in their most familiar apps.
+A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes.
+
+## Features
+- **End-User Friendly** - no extra learning or setup needed for end users to use ML models. The deliverables run in their most familiar apps.
 - **Cross Platform Support** - supercharged spreadsheets works on both Windows and macOS.
 - **Pre-Built CD Pipeline** - update your model in production with one single push.
 - **Opinionated Project Structure** - a clear project structure for easy collaboration.
