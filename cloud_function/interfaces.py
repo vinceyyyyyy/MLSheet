@@ -1,5 +1,4 @@
-from typing import TypedDict, Protocol, runtime_checkable
-from functools import partial
+from typing import Protocol, runtime_checkable
 
 import pandas as pd
 
@@ -9,7 +8,7 @@ class Model(Protocol):
     """Interface of Model object that will be used in AWS lambda function.
 
     :attr input_columns: list of column names that are used as input for the model.
-    :method predict: function that takes a dataframe and returns a series of predictions.
+    :method cloud_function: function that takes a dataframe and returns a series of predictions.
     """
     input_columns: list[str]
 
@@ -17,15 +16,12 @@ class Model(Protocol):
         ...
 
 
-class PredictionRequestBody(TypedDict):
+class PredictionRequestBody(Protocol):
     # value as {column_name: [value1, value2, ...]}
     ColumnNames: list[str]
     Values: dict[str, list[int | float]]
 
 
-class PredictionResponseBody(TypedDict):
+class PredictionResponseBody(Protocol):
     result: list[int | float]
 
-def add_method(obj, func):
-        """Bind a function and store it in an object"""
-        setattr(obj, func.__name__, partial(func, obj))

@@ -4,11 +4,11 @@ import os
 import dill
 import pandas as pd
 
-from utils import PredictionRequestBody, PredictionResponseBody, Model
+from interfaces import PredictionRequestBody, PredictionResponseBody, Model
 
 
 def lambda_handler(event: dict, _) -> dict:
-    """Lambda handler for the predict function.
+    """Lambda handler for the cloud_function function.
     This function returns a result, along with all columns that are not specified in input_cols.
 
     :param event: API Gateway Lambda Proxy Input Format: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
