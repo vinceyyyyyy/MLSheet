@@ -104,4 +104,4 @@ public repositories, meaning even if you have a giant 1GB image, the cost is onl
 
 
 ## Architecture
-![Architecture](docs/architecture.drawio.svg)
+<img alt="Architecture" src="docs/architecture.drawio.svg" style="background-color: white"/>
