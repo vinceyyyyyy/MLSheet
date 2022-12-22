@@ -1,4 +1,4 @@
-# Models on Cloud
+# MLSheet
 A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in minutes.
 
 ## Features
