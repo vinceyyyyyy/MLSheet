@@ -3,6 +3,7 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
 
 ## Features
 - **End-User Friendly** - no extra learning or setup needed for end users to use ML models. The deliverables run in their most familiar apps.
+- **Better Developer Experience** - no knowledge on AWS or Docker required to use this project, all mechanics are taken care of behind the scene.
 - **Cross Platform Support** - supercharged spreadsheets works on both Windows and macOS.
 - **Pre-Built CD Pipeline** - update your model in production with one single push.
 - **Opinionated Project Structure** - a clear project structure for easy collaboration.
@@ -80,6 +81,24 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
    file in `predict` with the new one.
 4. Make sure `samconfig.toml` file from the initial deployment exists at project root, commit and push everything to the
    production branch on GitHub, it will be deployed to AWS automatically.
+
+
+## Limitations and Workarounds
+### Input Data Size Limit
+AWS Lambda has a limit on request body must be less than 6MB, which generally translate to you cannot post all of your
+input data at once if you have a large dataset. A timeout error would occur in Excel if the limit is exceeded.
+As a rule of thumb you should always consider minimize the data passing up and down through the internet for better
+performance. However, when it is a must to post large data, we can do that in batches.
+
+On `Config` sheet you will find a parameter for Batch Size, which controls how many rows of the input table will be
+posted in each batch. When you try to refresh data but run into timeout error, you can use a smaller batch size instead.
+One example is that when there are 6 columns to post, the batch size needs to be less than 40,000.
+
+### Processing Time limit
+AWS API Gateway waits a maximum of 29 seconds for a Lambda function proxy invocation to complete, which means your model
+has less than 29 seconds to do the scoring. Again, this can be solved by scoring in batches. However, when your scoring
+function involves intense computation and takes longer than 29 seconds to finish, you might want to think about whether
+this is the right tool for you (do you really need to do this in a spreadsheet?).
 
 
 ## Cost Estimation
