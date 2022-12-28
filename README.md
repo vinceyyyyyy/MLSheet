@@ -13,11 +13,11 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
 ## Getting Started
 ### Environment Setup
 #### Windows
-1. Clone this repo, run PowerShell as Administrator and open its location
-2. Run `iex setup\windows.ps1` in PowerShell. This is going to
+1. Run `setup\windows.ps1` in PowerShell (right click and choose Run with PowerShell, will ask for Administrator
+   permission). This is going to
    install [chocolatey](https://chocolatey.org/), [AWS CLI](https://aws.amazon.com/cli/), [AWS SAM](https://aws.amazon.com/serverless/sam/),
    and [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-3. Reboot your computer when finished
+2. Reboot your computer when finished
 #### macOS/Linux
 1. Install AWS CLI from [here](https://aws.amazon.com/cli/)
 2. Install AWS SAM
