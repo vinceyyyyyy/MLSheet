@@ -1,4 +1,4 @@
-from typing import Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable, Union
 
 import pandas as pd
 
@@ -12,16 +12,16 @@ class Model(Protocol):
     """
     input_columns: list[str]
 
-    def run_predict(self, data: pd.DataFrame) -> pd.DataFrame | pd.Series:
+    def run_predict(self, data: pd.DataFrame) -> Union[pd.DataFrame, pd.Series]:
         ...
 
 
 class PredictionRequestBody(Protocol):
     # value as {column_name: [value1, value2, ...]}
     ColumnNames: list[str]
-    Values: dict[str, list[int | float]]
+    Values: dict[str, list[Union[int, float]]]
 
 
 class PredictionResponseBody(Protocol):
-    result: list[int | float]
+    result: list[Union[int, float]]
 
