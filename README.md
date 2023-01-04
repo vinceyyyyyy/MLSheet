@@ -26,7 +26,7 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
 4. Reboot your computer when finished
 
 ### Configure AWS Account
-1. Have a AWS account ready
+1. Have an AWS account ready
    and [get the Access Key](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys).
    The best practice is to create
    an [IAM user account](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/users) for it
@@ -39,11 +39,12 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
 ### First Time Deploy
 1. Develop your model in `model/train.ipynb` and use the last cell to save the model object as `model.pkl`. The model
    object needs to implement `run_predict` method and `input_columns` attribute, as specified
-   by `cloud_function/interfaces.py/Model` class
+   by `cloud_function/interfaces.py/Model` class. You need to have `dill` installed before doing
+   that (`pip install dill`).
 2. Move your model file to `cloud_function` folder
 3. Add your python dependencies to `cloud_function/requirements.txt`. If you have any system dependencies, add them to
    `cloud_function/Dockerfile` (line 43). For example, if you want to use LightGBM, you need to add `libgomp` here
-4. Start Docker Desktop if haven't, and run `sam build` in terminal at project root to build the project. You can then
+4. Start Docker Desktop if you haven't, and run `sam build` in terminal at project root to build the project. You can then
    locally test it with `sam local start-api` command
 5. Run `sam deploy --guided` in terminal at project root to deploy the project to AWS. You will be asked to provide a
    stack name (set to whatever you want) and AWS region (by default use `us-east-1`). You can use the default values for
