@@ -38,16 +38,12 @@ def lambda_handler(event: dict, _) -> dict:
     # Run prediction
     prediction_result = model.run_predict(df[model.input_columns])
 
-    # if only one column is returned, convert it to a dataframe with name as result
-    if not isinstance(prediction_result, pd.DataFrame):
-        try:
-            # Convert to list
-            prediction_result = pd.Series(prediction_result)
-        except Exception as e:
-            raise RuntimeError(f"Prediction result cannot be convert to series: {e}")
-        prediction_result = prediction_result.to_frame("result")
+    # if only one column is returned, name it as result
+    prediction_frame = pd.DataFrame(prediction_result)
+    if prediction_frame.shape[1] == 1:
+        prediction_frame.columns = ["result"]
 
-    total_result = pd.concat([df.drop(columns=model.input_columns), prediction_result], axis=1)
+    total_result = pd.concat([df.drop(columns=model.input_columns), prediction_frame], axis=1)
 
     # Attach unused columns to result. Most likely those are used as id.
     result_body: PredictionResponseBody = total_result.to_dict(orient="list")
@@ -56,4 +52,3 @@ def lambda_handler(event: dict, _) -> dict:
         "statusCode": 200,
         "body": json.dumps(result_body)
     }
-
