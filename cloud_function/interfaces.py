@@ -1,4 +1,4 @@
-from typing import Protocol, runtime_checkable, Union
+from typing import Protocol, runtime_checkable, Union, TypedDict
 
 import pandas as pd
 
@@ -16,12 +16,12 @@ class Model(Protocol):
         ...
 
 
-class PredictionRequestBody(Protocol):
+class PredictionRequestBody(TypedDict):
     # value as {column_name: [value1, value2, ...]}
     ColumnNames: list[str]
     Values: dict[str, list[Union[int, float]]]
 
 
-class PredictionResponseBody(Protocol):
+class PredictionResponseBody(TypedDict):
     result: list[Union[int, float]]
 
