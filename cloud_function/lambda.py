@@ -4,7 +4,7 @@ import os
 import dill
 import pandas as pd
 
-from interfaces import PredictionRequestBody, PredictionResponseBody, Model
+from interfaces import Model
 
 
 def lambda_handler(event: dict, _) -> dict:
@@ -15,8 +15,8 @@ def lambda_handler(event: dict, _) -> dict:
     :param _: Lambda Context runtime methods and attributes: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
     :return: API Gateway Lambda Proxy Output Format: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
-    request_body: PredictionRequestBody = json.loads(event["body"])
-    df = pd.DataFrame(request_body["Values"], columns=request_body["ColumnNames"])
+    request_body = json.loads(event["body"])  # request_body as {column_1: [value1, value2, ...], column_2: [value1, value2, ...], ...}
+    df = pd.DataFrame(request_body)
 
     # locate model file
     model_path = f"{os.getenv('FUNCTION_DIR')}/model.pkl"
@@ -46,9 +46,9 @@ def lambda_handler(event: dict, _) -> dict:
     total_result = pd.concat([df.drop(columns=model.input_columns), prediction_frame], axis=1)
 
     # Attach unused columns to result. Most likely those are used as id.
-    result_body: PredictionResponseBody = total_result.to_dict(orient="list")
+    response_body = total_result.to_dict(orient="list") # response_body as {column_1: [value1, value2, ...], column_2: [value1, value2, ...], ...}
 
     return {
         "statusCode": 200,
-        "body": json.dumps(result_body)
+        "body": json.dumps(response_body)
     }
