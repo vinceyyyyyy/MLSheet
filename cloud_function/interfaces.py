@@ -1,27 +1,14 @@
-from typing import Protocol, runtime_checkable, Union, TypedDict
+from typing import Protocol, runtime_checkable, Union
 
 import pandas as pd
+import numpy as np
 
 
 @runtime_checkable
 class Model(Protocol):
-    """Interface of Model object that will be used in AWS lambda function.
+    """Interface of Model object that will be used in AWS lambda function."""
+    input_columns: list[str]  # list of column names that are used as input for the model
 
-    :attr input_columns: list of column names that are used as input for the model.
-    :method cloud_function: function that takes a dataframe and returns a series of predictions.
-    """
-    input_columns: list[str]
-
-    def run_predict(self, data: pd.DataFrame) -> Union[pd.DataFrame, pd.Series]:
+    def run_predict(self, data: pd.DataFrame) -> Union[pd.DataFrame, pd.Series, np.ndarray, list]:
+        """function that takes a dataframe and returns a series of predictions"""
         ...
-
-
-class PredictionRequestBody(TypedDict):
-    # value as {column_name: [value1, value2, ...]}
-    ColumnNames: list[str]
-    Values: dict[str, list[Union[int, float]]]
-
-
-class PredictionResponseBody(TypedDict):
-    result: list[Union[int, float]]
-
