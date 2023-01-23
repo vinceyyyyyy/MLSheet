@@ -9,6 +9,15 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
 - **Opinionated Project Structure** - a clear project structure for easy collaboration.
 - **Cost Efficient** - use it with no cost or minimum cost (more on this see [cost estimation section](#cost-estimation)).
 
+## Roadmap
+This project is fully functional as is. However, it is far from perferct, nor has its potential been fully discovered.
+
+The future of this project would be:
+- Core deployment feature will be extracted as a standalone tool, [Aerostat](https://github.com/vinceyyyyyy/Aerostat). 
+  Aerostat would be an zero config required, fully interactive **CLI tool** for deploying ML models to clouds.
+- MLSheet will evolve to a **web based, Data Scientist facing tool**, driven by Aerostat. Data Scientists can just upload their model file,
+  and get a fully functional Excel file or Google Sheets copy. No CLI commmmand needed what so ever.
+
 
 ## Getting Started
 ### Environment Setup
