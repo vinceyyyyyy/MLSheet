@@ -10,14 +10,21 @@ A framework for making ML model enabled spreadsheets (Excel/Google Sheets) in mi
 - **Cost Efficient** - use it with no cost or minimum cost (more on this see [cost estimation section](#cost-estimation)).
 
 ## Roadmap
-This project is fully functional as is. However, it is far from perferct, nor has its potential been fully discovered.
+This project is fully functional as is. However, the core features has been extracted as a standalone tool, [Aerostat
+](https://github.com/vinceyyy/Aerostat).
 
-The future of this project would be:
-- Core deployment feature will be extracted as a standalone tool, [Aerostat](https://github.com/vinceyyyyyy/Aerostat). 
-  Aerostat would be an zero config required, fully interactive **CLI tool** for deploying ML models to clouds.
-- MLSheet will evolve to a **web based, Data Scientist facing tool**, driven by Aerostat. Data Scientists can just upload their model file,
-  and get a fully functional Excel file or Google Sheets copy. No CLI commmmand needed what so ever.
+**Aerostat** is a fully interactive **CLI tool** that deploys your ML models to cloud, and generates spreadsheets with ML model connection
+baked in at the same time. Essentially there is no need for MLSheet as is anymore, since Aerostat has all the features of MLSheet, and
+does them better.
 
+MLSheet will evolve to a **web based, Data Scientist facing tool**, powered by Aerostat. Data Scientists can just upload their model file,
+and get a fully functional Excel file or Google Sheets copy. No CLI command needed whatsoever.
+
+The tentative difference between Aerostat and MLSheet would be:
+- Aerostat aims to provide easy deployment for individual. As long as you have a valid AWS account, you can deploy your model
+  with Aerostat. This is ideal for individual Data Scientists who want to share their model with others, or quickly span a new project.
+- MLSheet will be more of a tool for teams, where the team hosts a central deployment environment with MLSheet, and everyone on the team can
+  use it directly without local environment.
 
 ## Getting Started
 ### Environment Setup
